@@ -25,7 +25,6 @@ const cargarListaDesdeLocalStorage = () => {
     const listaGuardada = localStorage.getItem('listaLectura');
     if (listaGuardada) {
         listaLectura.value = JSON.parse(listaGuardada);
-        console.log(listaLectura.value);
         libros.value = arrayLibros.filter(libro => !listaLectura.value.some(libroLectura => libroLectura.ISBN === libro.ISBN));
     }
 };
@@ -64,13 +63,15 @@ onMounted(() => {
     cargarListaDesdeLocalStorage();
 })
 
+watch(() => localStorage.getItem('listaLectura'), (newValue) => {
+  listaLectura.value = JSON.parse(newValue || '[]')
+})
+
 // Escuchar cambios en el LocalStorage en todas las pestañas
 window.addEventListener('storage', (event) => {
-    if (event.key === 'readList') {
-        readList.value = JSON.parse(event.newValue || '[]');
-    }
-    if (event.key === 'booksList') {
-        booksList.value = JSON.parse(event.newValue || '[]');
+    if (event.key === 'listaLectura') {
+        listaLectura.value = JSON.parse(event.newValue || '[]');
+        cargarListaDesdeLocalStorage();
     }
 });
 </script>
@@ -78,24 +79,28 @@ window.addEventListener('storage', (event) => {
 <template>
     <main>
         <div class="disponibles">
-            <h2>{{ libros.length }} libros disponibles</h2>
-            <h4 v-if="listaLectura.length > 0">{{ listaLectura.length }} en la lista de lectura</h4>
-            <label for="genero">Filtrar por género</label>
-            <select v-model="generoSeleccionado" name="genero" id="genero">
-                <option value="todos">Todos</option>
-                <option value="Fantasía">Fantasía</option>
-                <option value="Ciencia ficción">Ciencia ficción</option>
-                <option value="Zombies">Zombies</option>
-                <option value="Terror">Terror</option>
-            </select>
+            <h2 class="text-center">{{ libros.length }} libros disponibles</h2>
+            <h4 class="text-center mb-4" v-if="listaLectura.length > 0">{{ listaLectura.length }} en la lista de lectura</h4>
+            <div class="text-center mb-4">
+                <div class="mb-2">
+                    <label for="genero">Filtrar por género</label>
+                    <select v-model="generoSeleccionado" name="genero" id="genero">
+                        <option value="todos">Todos</option>
+                        <option value="Fantasía">Fantasía</option>
+                        <option value="Ciencia ficción">Ciencia ficción</option>
+                        <option value="Zombies">Zombies</option>
+                        <option value="Terror">Terror</option>
+                    </select>
+                </div>
 
-            <label for="paginas">Filtrar por número de páginas</label>
-            <select v-model="paginasSeleccionadas" name="paginas" id="paginas">
-                <option value="cualquiera">Cualquiera</option>
-                <option value="300">300 páginas o menos</option>
-                <option value="400">400 páginas o menos</option>
-                <option value="1200">1200 páginas o menos</option>
-            </select>
+                <label for="paginas">Filtrar por número de páginas</label>
+                <select v-model="paginasSeleccionadas" name="paginas" id="paginas">
+                    <option value="cualquiera">Cualquiera</option>
+                    <option value="300">300 páginas o menos</option>
+                    <option value="400">400 páginas o menos</option>
+                    <option value="1200">1200 páginas o menos</option>
+                </select>
+            </div>
             <div class="libros container">
                 <div v-for="libro in libros" :key="libro.ISBN">
                     <Book :imagen="libro.cover" :title="libro.title" @anadirLibro="addListaLectura(libro)"></Book>
@@ -104,7 +109,7 @@ window.addEventListener('storage', (event) => {
 
         </div>
         <div class="lista-lectura" v-if="listaLectura.length > 0">
-            <h2>Lista de lectura</h2>
+            <h2 class="text-center mb-3">Lista de lectura</h2>
             <div class="libros container">
                 <div v-for="libro in listaLectura" :key="libro.ISBN">
                     <Book :imagen="libro.cover" :title="libro.title" @anadirLibro="addListaLectura(libro)"></Book>
@@ -122,9 +127,10 @@ main {
 
 <style>
 body {
-    background-color: black;
+    background-color: #1E1E20;
     font-family: Arial, sans-serif;
-    padding: 1%;
+    padding: 2%;
+    font-family: "Protest Riot", sans-serif;
 }
 
 .libros {
@@ -137,7 +143,6 @@ body {
 .disponibles {
     float: left;
     width: 60%;
-    border: 1px solid white;
     padding: 1%;
     padding-bottom: 3%;
 }
@@ -145,7 +150,9 @@ body {
 .lista-lectura {
     float: right;
     width: 38%;
-    border: 1px solid white;
+    border: 2px solid white;
     padding: 1%;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 1);
 }
 </style>

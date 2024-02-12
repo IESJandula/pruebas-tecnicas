@@ -20,6 +20,7 @@ const anadirLibro = () => {
 
 <template>
     <img :src="imagen" :alt="title" @click="anadirLibro">
+    <h6>{{title}}</h6>
 </template>
 
 <style scoped>
