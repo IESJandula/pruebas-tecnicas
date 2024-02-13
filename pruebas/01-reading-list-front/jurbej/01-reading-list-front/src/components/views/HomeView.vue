@@ -94,10 +94,6 @@ window.addEventListener('storage', (event) => {
                         <select v-model="generoSeleccionado" name="genero" id="genero">
                             <option value="todos">Todos</option>
                             <option v-for="genero in generos" :key="genero">{{ genero }}</option>
-                            <!-- <option value="Fantasía">Fantasía</option>
-                            <option value="Ciencia ficción">Ciencia ficción</option>
-                            <option value="Zombies">Zombies</option>
-                            <option value="Terror">Terror</option> -->
                         </select>
                     </div>
 
