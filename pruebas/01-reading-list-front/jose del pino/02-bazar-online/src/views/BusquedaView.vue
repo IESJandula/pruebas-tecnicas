@@ -7,7 +7,7 @@
           :description="producto.description"
           :price="producto.price"
           :rating="producto.rating"
-          :imagen="producto.imagen"
+          :imagen="producto.thumbnail"
         ></Search>
       </div>
     </div>
@@ -16,13 +16,13 @@
 <script setup lang="ts">
     import Search from '../components/Search.vue'
 
-    import {producto} from '@/types/type'
+    import type {Producto} from '@/types/type'
 
     import { ref, onMounted } from 'vue';
     import { useRoute } from 'vue-router';
 
     const route = useRoute();
-    const productos=ref([])
+    const productos = ref<Producto[]>([]);
 
     // Obtenemos el valor del parámetro de consulta q al cargar el componente
     onMounted(() => {
