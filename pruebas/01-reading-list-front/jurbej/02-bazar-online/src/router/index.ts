@@ -14,14 +14,12 @@ const router = createRouter({
     {
       path: '/products',
       name: 'searchResults',
-      component: SearchResultsView,
-      props: (route) => ({ search: route.query.search })
+      component: SearchResultsView
     },
     {
       path: '/products/:id',
       name: 'productDetail',
-      component: ProductDetailView,
-      props: true
+      component: ProductDetailView
     }
   ]
 })

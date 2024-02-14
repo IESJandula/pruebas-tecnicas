@@ -1,8 +1,28 @@
 <script setup lang="ts">
-import type {Product}
+import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+import type { Product } from '@/types/types';
+
+const router = useRouter();
+const searchTerm = ref('')
 
 const searchProducts = () => {
-    
+    if (searchTerm.value.trim() !== '') {
+        // Redirecciona a la ruta 'searchResults' y pasa el término de búsqueda como query param
+        router.push({ name: 'searchResults', query: { search: searchTerm.value } });
+    } else {
+        notify()
+        console.warn('La búsqueda está vacía');
+    }
+};
+
+const notify = () => {
+    toast("La búsqueda está vacía", {
+        type: 'warning',
+        autoClose: 2000,
+    });
 };
 </script>
 
@@ -13,8 +33,8 @@ const searchProducts = () => {
         <div class="d-flex align-items-center">
             <i class="bi bi-search fs-3 mb-2 mx-2"></i>
             <form class="form-inline my-2 my-lg-0" @submit.prevent="searchProducts">
-                <input class="form-control mr-sm-2 mb-3" type="search" placeholder="laptops, smartphones, ..."
-                    aria-label="Search">
+                <input v-model="searchTerm" class="form-control mr-sm-2 mb-3" type="search"
+                    placeholder="laptops, smartphones, ..." aria-label="Search">
             </form>
         </div>
         <button @click="searchProducts" class="boton" type="submit">Buscar</button>
