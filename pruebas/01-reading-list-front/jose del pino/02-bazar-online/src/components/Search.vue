@@ -1,23 +1,46 @@
 <template>
     <div>
-        <h2>Resultados de búsqueda</h2>
-        <p>Query: {{ query }}</p>
+        <h3>Resultados de búsqueda de {{ props.title }}</h3>
+            <div>
+                <img :src="props.imagen">
+                <h2>{{ props.title }}</h2>
+                <p>{{ props.description }}</p>
+                <p>{{ props.price }}</p>
+                <p>{{ props.rating }}</p>
+
+            </div>
     </div>
 </template>
 
 <script setup lang="ts">
-    import { ref, onMounted } from 'vue';
-    import { useRoute } from 'vue-router';
+    import {defineProps} from 'vue'
 
-    const route = useRoute();
-    const query = ref('');
+    const props=defineProps({
+        title: {
+            type: String,
+            required: true
+        },
 
-    // Obtenemos el valor del parámetro de consulta q al cargar el componente
-    onMounted(() => {
-        if (typeof route.query.q === 'string') {
-        query.value = route.query.q;
-    }
-    });
+        description: {
+            type: String,
+            required: true
+        },
+
+        price: {
+            type: Number,
+            required: true
+        },
+
+        rating: {
+            type: String,
+            required: true
+        },
+
+        imagen: {
+            type: String,
+            required: true
+        },
+    })
 </script>
 
 <style scoped>
