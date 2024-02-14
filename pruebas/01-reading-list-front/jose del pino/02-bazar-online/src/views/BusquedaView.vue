@@ -1,0 +1,12 @@
+<template>
+    <Search></Search>
+
+</template>
+
+<script setup lang="ts">
+    import Search from '../components/Search.vue'
+</script>
+
+<style scoped>
+
+</style>
