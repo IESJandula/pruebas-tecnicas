@@ -1,11 +1,12 @@
 <template>
-    <div>
-        <h3>Resultados de búsqueda de {{ props.title }}</h3>
-            <div>
+    <div class="producto">
+            <div class="imagen">
                 <img :src="props.imagen">
+            </div>
+            <div class="contenido">
                 <h2>{{ props.title }}</h2>
                 <p>{{ props.description }}</p>
-                <p>{{ props.price }}</p>
+                <p class="negrita">{{ props.price }}€</p>
                 <p>{{ props.rating }}</p>
 
             </div>
@@ -44,5 +45,24 @@
 </script>
 
 <style scoped>
+.negrita{
+    font-weight: bold;
+    font-size: 1.2em;
+}
 
+.producto {
+  display: flex; 
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.imagen {
+  flex: 0 0 auto; 
+  margin-right: 20px;
+}
+
+
+.contenido {
+  flex: 1; /* El contenido ocupará el espacio restante */
+}
 </style>

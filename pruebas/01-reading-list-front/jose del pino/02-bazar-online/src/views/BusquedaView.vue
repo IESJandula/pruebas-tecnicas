@@ -1,6 +1,6 @@
 <template>
     <div>
-      <h2>Resultados de búsqueda</h2>
+      <h2>Resultados de búsqueda "{{busquedaQuery }}":" {{ productos.length }}</h2>
       <div v-for="producto in productos" :key="producto.id">
         <Search
           :title="producto.title"
@@ -23,12 +23,15 @@
 
     const route = useRoute();
     const productos = ref<Producto[]>([]);
+    const busquedaQuery=ref('')
+    
 
     // Obtenemos el valor del parámetro de consulta q al cargar el componente
     onMounted(() => {
         const query = route.query.q;
         if (typeof query === 'string' && query.trim() !== '') {
-            searchProductos(query);
+            busquedaQuery.value=query
+            searchProductos(busquedaQuery.value);
         }
     });
 
@@ -39,7 +42,7 @@
             throw new Error('Error al obtener los productos');
             }
             const data = await response.json();
-            productos.value = data;
+            productos.value = data.items;
         } catch (error) {
             console.error('Error en la búsqueda:', error);
         }
