@@ -119,7 +119,7 @@ const server = app.listen(port, () => {
   console.log(`Servidor escuchando en http://${serverIp.address}:${port}`);
 });
 
-
+module.exports=app
 
 
 
