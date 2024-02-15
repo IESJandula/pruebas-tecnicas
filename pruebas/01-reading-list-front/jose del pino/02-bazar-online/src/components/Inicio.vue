@@ -1,12 +1,14 @@
 <template>
-    <main class="">
-        <img :src="caravana" alt="Caravana icon" class="mb-1">
-        <h1 class="text-4xl font-bold mb-4">Bazar Online</h1>
+    <main class="container" :class="{ 'nuevas-clases-header': useNewStyles }">
+        <div>
+            <img :src="caravana" alt="Caravana icon" class="mb-1">
+            <h1 v-if="!useNewStyles" class="text-4xl font-bold mb-4">Bazar Online</h1>
+        </div>
         <div class="search-container">
             <input v-model="searchQuery" placeholder="laptos, smartphones, ..." type="search" class="search-input">
         </div>
-        <div class="button-borders">
-            <button class="primary-button" @click="search"> BUSCAR </button>
+        <div>
+            <button class="btn" @click="search">BUSCAR</button>
         </div>
     </main>
 </template>
@@ -15,6 +17,11 @@
 import caravana from '../../public/caravana.png'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue';
+import { defineProps } from 'vue';
+
+const props = defineProps({
+  useNewStyles: Boolean
+});
 
 const route = useRouter()
 const searchQuery = ref('')
@@ -27,6 +34,7 @@ const search = () => {
 </script>
 
 <style scoped>
+
 .search-input {
     width: 300px;
     height: 40px;
@@ -48,99 +56,48 @@ main{
 .search-input:focus {
     border-color: #79bcff;
 }
-.primary-button {
- font-family: 'Ropa Sans', sans-serif;
-    /* font-family: 'Valorant', sans-serif; */
- color: white;
+
+.btn {
+ padding: 1.1em 2em;
+ background: none;
+ border: 2px solid #fff;
+ font-size: 15px;
+ color: #ffffff;
  cursor: pointer;
- font-size: 13px;
- font-weight: bold;
- letter-spacing: 0.05rem;
- border: 1px solid #79bcff;
- padding: 0.8rem 2.1rem;
- background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 531.28 200'%3E%3Cdefs%3E%3Cstyle%3E .shape %7B fill: %23FF4655 /* fill: %230E1822; */ %7D %3C/style%3E%3C/defs%3E%3Cg id='Layer_2' data-name='Layer 2'%3E%3Cg id='Layer_1-2' data-name='Layer 1'%3E%3Cpolygon class='shape' points='415.81 200 0 200 115.47 0 531.28 0 415.81 200' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
- background-color: #78bbff;
- background-size: 200%;
- background-position: 200%;
- background-repeat: no-repeat;
- transition: 0.3s ease-in-out;
- transition-property: background-position, border, color;
  position: relative;
- z-index: 1;
+ overflow: hidden;
+ transition: all 0.3s;
+ border-radius: 12px;
+ background-color: #0f014b;
+ font-weight: bolder;
+ box-shadow: 0 2px 0 2px #000;
+ margin: 20px;
 }
 
-.primary-button:hover {
- border: 1px solid #FF4655;
- color: white;
- background-position: 40%;
-}
-
-.primary-button:before {
+.btn:before {
  content: "";
  position: absolute;
- background-color: #6ab5ff;
- width: 0.2rem;
- height: 0.2rem;
- top: -1px;
- left: -1px;
- transition: background-color 0.15s ease-in-out;
+ width: 100px;
+ height: 120%;
+ background-color: #ff6700;
+ top: 50%;
+ transform: skewX(30deg) translate(-150%, -50%);
+ transition: all 0.5s;
 }
 
-.primary-button:hover:before {
- background-color: white;
+.btn:hover {
+ background-color: #ecd448;
+ color: #fff;
+ box-shadow: 0 2px 0 2px #0d3b66;
 }
 
-.primary-button:hover:after {
- background-color: white;
+.btn:hover::before {
+ transform: skewX(30deg) translate(150%, -50%);
+ transition-delay: 0.1s;
 }
 
-.primary-button:after {
- content: "";
- position: absolute;
- background-color: #79b7ff;
- width: 0.3rem;
- height: 0.3rem;
- bottom: -1px;
- right: -1px;
- transition: background-color 0.15s ease-in-out;
+.btn:active {
+ transform: scale(0.9);
 }
-
-.button-borders {
- position: relative;
- width: fit-content;
- height: fit-content;
- margin: 30px;
- margin-left: 80px;
-}
-
-.button-borders:before {
- content: "";
- position: absolute;
- width: calc(100% + 0.5em);
- height: 50%;
- left: -0.3em;
- top: -0.3em;
- border: 1px solid #0E1822;
- border-bottom: 0px;
-    /* opacity: 0.3; */
-}
-
-.button-borders:after {
- content: "";
- position: absolute;
- width: calc(100% + 0.5em);
- height: 50%;
- left: -0.3em;
- bottom: -0.3em;
- border: 1px solid #0E1822;
- border-top: 0px;
-    /* opacity: 0.3; */
- z-index: 0;
-}
-
-.shape {
- fill: #0E1822;
-}
-
 
 </style>

@@ -1,7 +1,11 @@
 <template>
-    <div class="container">
-      <Inicio class="header"></Inicio>
+  <div class="container">
+    <div class="header">
+      <Inicio class="nuevas-clases-header" :useNewStyles="true"></Inicio>
+    </div>
+    <div>
       <h2>Resultados de búsqueda "{{busquedaQuery }}":" {{ productos.length }}</h2>
+    </div>
     <div class="resultados">
       <div v-for="producto in productos" :key="producto.id">
         <Search
@@ -12,9 +16,10 @@
           :rating="producto.rating"
           :imagen="producto.thumbnail"
         ></Search>
-      </div>
+      
       </div>
     </div>
+  </div>
   </template>
 
 <script setup lang="ts">
@@ -56,31 +61,23 @@
 
 <style scoped>
 
-h1{
-  display: none;
-}
-.container {
+.nuevas-clases-header {
   display: flex;
-  flex-direction: column;
-  align-items: center; /* Centra horizontalmente */
-  margin-top: 20px;
-  text-align: center;
-  width: 100%;
-}
-
-.header {
-  width: 100%;
-  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
 }
 
 .resultados {
-  margin-top: 20px; /* Espacio entre el header y los resultados */
+  margin-top: 20px;
   display: flex;
-  column-gap: 20px;
+  flex-direction: column;
+  align-items: center;
+  column-gap: 5px;
 }
 
 /* Estilos para cada producto */
 .resultados > div {
-  margin-bottom: 20px; /* Espacio entre cada producto */
+  width: 800px;
+  height: 300px;
 }
 </style>
