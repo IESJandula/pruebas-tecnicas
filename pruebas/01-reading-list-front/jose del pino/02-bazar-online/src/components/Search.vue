@@ -1,5 +1,5 @@
 <template>
-    <div class="producto">
+    <div class="producto" @click="verProducto">
             <div class="imagen">
                 <img :src="props.imagen">
             </div>
@@ -15,8 +15,15 @@
 
 <script setup lang="ts">
     import {defineProps} from 'vue'
+    import { useRouter } from 'vue-router'
+
+    const router = useRouter()
 
     const props=defineProps({
+        id:{
+            type:Number,
+            required: true
+        },
         title: {
             type: String,
             required: true
@@ -42,6 +49,10 @@
             required: true
         },
     })
+
+    const verProducto = () => {
+        router.push({ name: 'producto', params: { id: props.id } })
+    }
 </script>
 
 <style scoped>

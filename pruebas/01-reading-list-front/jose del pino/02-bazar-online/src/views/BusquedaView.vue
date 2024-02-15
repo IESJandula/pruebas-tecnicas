@@ -1,8 +1,11 @@
 <template>
-    <div>
+    <div class="container">
+      <Inicio class="header"></Inicio>
       <h2>Resultados de búsqueda "{{busquedaQuery }}":" {{ productos.length }}</h2>
+    <div class="resultados">
       <div v-for="producto in productos" :key="producto.id">
         <Search
+          :id="producto.id"
           :title="producto.title"
           :description="producto.description"
           :price="producto.price"
@@ -10,11 +13,13 @@
           :imagen="producto.thumbnail"
         ></Search>
       </div>
+      </div>
     </div>
   </template>
 
 <script setup lang="ts">
     import Search from '../components/Search.vue'
+    import Inicio from '../components/Inicio.vue'
 
     import type {Producto} from '@/types/type'
 
@@ -51,4 +56,31 @@
 
 <style scoped>
 
+h1{
+  display: none;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente */
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+}
+
+.resultados {
+  margin-top: 20px; /* Espacio entre el header y los resultados */
+  display: flex;
+  column-gap: 20px;
+}
+
+/* Estilos para cada producto */
+.resultados > div {
+  margin-bottom: 20px; /* Espacio entre cada producto */
+}
 </style>
