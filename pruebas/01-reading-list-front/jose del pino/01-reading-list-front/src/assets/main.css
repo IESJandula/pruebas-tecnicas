@@ -1,0 +1,10 @@
+*{
+  background-color: rgb(65, 65, 65);
+  color: white;
+}
+
+article{
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  border: 1px solid white;
+}
