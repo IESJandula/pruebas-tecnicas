@@ -1,4 +1,0 @@
-[build]
-  base = "pruebas-tecnicas/pruebas/01-reading-list-front/jurbej/01-reading-list-front"
-  command = "npm install && npm run build"
-  publish = "/opt/build/repo/dist"
