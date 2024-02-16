@@ -5,7 +5,9 @@
             <h1 v-if="!useNewStyles" class="text-4xl font-bold mb-4">Bazar Online</h1>
         </div>
         <div class="search-container">
-            <input v-model="searchQuery" placeholder="laptos, smartphones, ..." type="search" class="search-input">
+            <form @submit.prevent="search">
+                <input v-model="searchQuery" placeholder="laptos, smartphones, ..." type="search" class="search-input">
+            </form>
         </div>
         <div>
             <button class="btn" @click="search">BUSCAR</button>
@@ -25,12 +27,20 @@ const props = defineProps({
 
 const route = useRouter()
 const searchQuery = ref('')
+
+const emit = defineEmits(['search']);
+
 const search = () => {
     if (searchQuery.value.trim() !== ''){
         // Navegar a la vista de resultados de búsqueda y pasar el texto de búsqueda como parámetro
         route.push({ path: '/search', query: { q: searchQuery.value } })
+        emit('search', searchQuery.value);
     }
 }
+
+
+
+
 </script>
 
 <style scoped>

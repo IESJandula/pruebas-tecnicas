@@ -180,6 +180,7 @@
   margin-left: auto;
   margin-right: auto; 
   display: block;
+  border-radius: 100%;
 }
 
 .descripcion{

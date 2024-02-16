@@ -1,10 +1,15 @@
 <template>
   <div class="container">
     <div class="header">
-      <Inicio class="nuevas-clases-header" :useNewStyles="true"></Inicio>
+      <Inicio class="nuevas-clases-header" @search="busqueda" :useNewStyles="true"></Inicio>
     </div>
     <div>
-      <h2>Resultados de búsqueda "{{busquedaQuery }}":" {{ productos.length }}</h2>
+      <h2 class="center">Resultados de búsqueda "{{busquedaQuery }}":" {{ productos.length }}</h2>
+      <div class="cards-container">
+        <div class="card" v-for="(count, category) in dispositivosPorCategoria" :key="category">
+          <p>{{ category }}: {{ count }}</p>
+        </div>
+      </div>
     </div>
     <div class="resultados">
       <div v-for="producto in productos" :key="producto.id">
@@ -34,14 +39,15 @@
     const route = useRoute();
     const productos = ref<Producto[]>([]);
     const busquedaQuery=ref('')
+    const dispositivosPorCategoria = ref<Record<string, number>>({});
     
 
     // Obtenemos el valor del parámetro de consulta q al cargar el componente
-    onMounted(() => {
+    onMounted(async() => {
         const query = route.query.q;
         if (typeof query === 'string' && query.trim() !== '') {
             busquedaQuery.value=query
-            searchProductos(busquedaQuery.value);
+            await searchProductos(busquedaQuery.value);
         }
     });
 
@@ -53,9 +59,29 @@
             }
             const data = await response.json();
             productos.value = data.items;
+
+            contarDispositivosPorCategoria();
         } catch (error) {
             console.error('Error en la búsqueda:', error);
         }
+    }
+
+    function contarDispositivosPorCategoria() {
+      dispositivosPorCategoria.value = {};
+      productos.value.forEach(producto => {
+          if (producto.category in dispositivosPorCategoria.value) {
+              dispositivosPorCategoria.value[producto.category]++;
+          } else {
+              dispositivosPorCategoria.value[producto.category] = 1;
+          }
+      });
+    }
+
+    const busqueda =(valor:string)=>{
+      if(valor !=''){
+        busquedaQuery.value=valor
+        searchProductos(busquedaQuery.value)
+      }
     }
 </script>
 
@@ -78,6 +104,24 @@
 /* Estilos para cada producto */
 .resultados > div {
   width: 800px;
-  height: 300px;
+  height: 200px;
+}
+
+.center{
+  text-align: center;
+}
+
+.card{
+  margin-right: 10px;
+  text-align: center;
+  background-color: rgb(0, 16, 67);
+  color: white;
+}
+
+.cards-container{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 </style>
