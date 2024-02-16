@@ -13,5 +13,6 @@ import { RouterLink, RouterView } from 'vue-router'
 <style>
 body {
   font-family: "Kanit", sans-serif;
+  background-color: #f8f8f8;
 }
 </style>
