@@ -3,10 +3,9 @@ import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
-import type { Product } from '@/types/types';
 
 const router = useRouter();
-const searchTerm = ref('')
+const searchTerm = ref<string>('');
 
 const searchProducts = () => {
     if (searchTerm.value.trim() !== '') {
@@ -30,11 +29,6 @@ const notify = () => {
         <img class="mt-5" src="../../public/logo.png" alt="Bazar Online">
         <h1 class="mb-4">Bazar Online</h1>
         <div class="d-flex align-items-center">
-            <!-- <i class="bi bi-search fs-3 mb-2 mx-2"></i> -->
-            <!-- <form class="form-inline my-2 my-lg-0" @submit.prevent="searchProducts">
-                <input v-model="searchTerm" class="form-control mr-sm-2 mb-3" type="search"
-                    placeholder="laptops, smartphones, ..." aria-label="Search">
-            </form> -->
             <form class="form mb-4" @submit.prevent="searchProducts">
                 <button>
                     <svg width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"

@@ -1,11 +1,6 @@
 <template>
     <div class="container d-flex align-items-center justify-content-center mt-5 mb-3">
         <img src="../../public/logo.png" alt="Bazar Online" class="mr-3">
-        <!-- <i class="bi bi-search fs-3 mb-1 mx-3"></i>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2 mb-1" type="search" placeholder="laptops, smartphones, ..."
-                aria-label="Search">
-        </form> -->
         <form class="form" @submit.prevent="handleSearch">
             <button>
                 <svg width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"
@@ -46,7 +41,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 
-const showCartMenu = ref(false);
+const showCartMenu = ref<boolean>(false);
 
 const toggleCartMenu = () => {
     showCartMenu.value = !showCartMenu.value;
@@ -60,7 +55,7 @@ const total = computed(() => {
 });
 
 const emit = defineEmits(['search']);
-const searchTerm = ref('');
+const searchTerm = ref<string>('');
 
 const handleSearch = () => {
     // Emitir el evento 'search' con el término de búsqueda

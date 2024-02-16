@@ -7,10 +7,11 @@ import type { Product } from '@/types/types';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
-const searchTerm = ref('');
+const searchTerm = ref<string>('');
 const route = useRoute();
 const router = useRouter();
 const searchResults = ref<Product[]>([]);
+const productosPorCategoria = ref<Record<string, number>>({});
 
 onMounted(async () => {
     // Accede al valor de la query 'search' desde la ruta
@@ -41,6 +42,8 @@ const fetchDataProduct = async () => {
         const response = await fetch(`https://api-bazar-online.onrender.com/products/items?q=${searchTerm.value}`);
         const data = await response.json();
         searchResults.value = data.items;
+
+        generaTarjetasCategoria()
     } catch (error) {
         console.error('Error al llamar a la API:', error);
     }
@@ -52,6 +55,17 @@ const showDetails = (productID: number) => {
         router.push({ name: 'productDetail', params: { id: productID } });
     }
 }
+
+const generaTarjetasCategoria = () => {
+    productosPorCategoria.value = {};
+    searchResults.value.forEach(producto => {
+        if (producto.category in productosPorCategoria.value) {
+            productosPorCategoria.value[producto.category]++;
+        } else {
+            productosPorCategoria.value[producto.category] = 1;
+        }
+    });
+}
 </script>
 
 <template>
@@ -59,6 +73,11 @@ const showDetails = (productID: number) => {
         <SearchBoxInLine @search="performSearch"></SearchBoxInLine>
         <section class="container mb-4">
             <h3 class="text-center mb-4">Resultados de la búsqueda para "{{ searchTerm }}": {{ searchResults.length }}</h3>
+            <div class="d-flex flex-wrap justify-content-center align-items-center">
+                <div class="card-category" v-for="(count, category) in productosPorCategoria" :key="category">
+                    <p>{{ category }}: {{ count }}</p>
+                </div>
+            </div>
             <div class="row g-4">
                 <div v-for="product in searchResults" :key="product.id" class="col-md-6">
                     <ProductCard @showDetails="showDetails(product.id)" :image="product.thumbnail" :title="product.title"
@@ -69,3 +88,15 @@ const showDetails = (productID: number) => {
         </section>
     </main>
 </template>
+
+<style scoped>
+.card-category {
+    padding: 3px;
+    margin-right: 1%;
+    margin-bottom: 2%;
+    background-color: #2f2ee9;
+    color: white;
+    border: 2px solid black;
+    border-radius: 5%;
+}
+</style>

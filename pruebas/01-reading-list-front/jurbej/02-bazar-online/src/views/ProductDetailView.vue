@@ -11,7 +11,7 @@ const route = useRoute();
 const product = ref<Product | null>(null);
 const id = ref<string | null>(null);
 const cartCount = ref<number>(0)
-const searchTerm = ref('');
+    const searchTerm = ref<string>('');
 
 const fetchDataProduct = async () => {
     try {

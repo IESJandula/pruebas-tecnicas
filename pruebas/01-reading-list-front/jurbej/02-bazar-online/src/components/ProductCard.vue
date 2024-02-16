@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { Product } from '@/types/types';
 import { ref, computed } from 'vue';
 
 const props = defineProps({
@@ -38,19 +37,6 @@ const showDetails = () => {
 </script>
 
 <template>
-    <!-- <div class="product-container mb-5" @click="showDetails">
-        <img class="product-image" :src="image" :alt="title">
-        <div class="product-details">
-            <h5>{{ title }}</h5>
-            <p>{{ description }}</p>
-            <div class="d-flex">
-                <h5>€{{ price }}</h5>
-                <div class="mx-2">
-                    <span v-for="star in stars" :key="star" class="star">★</span>
-                </div>
-            </div>
-        </div>
-    </div> -->
     <div class="card text-center height d-flex flex-column justify-content-between" @click="showDetails">
         <div class="mt-3">
             <h4>{{ title }}</h4>
