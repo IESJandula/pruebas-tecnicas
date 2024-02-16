@@ -1,2 +1,4 @@
 [build]
   base = "pruebas-tecnicas/pruebas/01-reading-list-front/jurbej/01-reading-list-front"
+  command = "npm run build"
+  publish = "dist"
